@@ -20,7 +20,7 @@ type WriteWord<XStart extends number, YStart extends number, Str extends string>
 type CheckBox<T extends number> = T extends 1 
 ? '✅' :  T extends 0 ? '🔲' : '🔥'; 
 
-type Todo< done extends boolean, Todo extends string, Line extends number> = WriteWord<1, Line, `${CheckBox<done>} ${Todo}`>; 
+type Todo< done extends number, Todo extends string, Line extends number> = WriteWord<1, Line, `${CheckBox<done>} ${Todo}`>; 
 
 
 type GetPositionMatching<Positions extends Position[], XSearch extends number, YSearch extends number> = 
@@ -70,5 +70,5 @@ type Todos<R extends any[]> = [
     ...Todo<R[5], 'branded types', 14>,
   ]
 
-type State = [1,1,1,1,1,1];
+type State = [0,1,1,1,1,1];
 type Result = DrawAt<[...block, ...Todos<State>], 23, 16, ' '>;
