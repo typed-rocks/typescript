@@ -1,3 +1,4 @@
+// generic function
 function branded<PrimitiveType, BrandName, Brand extends PrimitiveType & {__brand: BrandName}>(
     checkFn: (input: PrimitiveType) => boolean, brandName: BrandName
 ): [(input: PrimitiveType) => input is Brand, Brand] {
@@ -11,6 +12,13 @@ function branded<PrimitiveType, BrandName, Brand extends PrimitiveType & {__bran
 const [isEmail, EmailObject] = branded((input: string) => true, 'ValidEmail' as const);
 
 type ValidEmail = typeof EmailObject;
+
+//assert and throw on false:
+function assertValidEmail(input: string): asserts input is ValidEmail {
+    if(!isEmail(input)) {
+        throw new Error('input is no email');
+    }
+}
 
 function sendEmail(input: ValidEmail) {
 
