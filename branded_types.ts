@@ -1,33 +1,35 @@
-// generic function
-function branded<PrimitiveType, BrandName, Brand extends PrimitiveType & {__brand: BrandName}>(
-    checkFn: (input: PrimitiveType) => boolean, brandName: BrandName
-): [(input: PrimitiveType) => input is Brand, Brand] {
-    const isBrand = function (input: PrimitiveType): input is Brand {
-        return checkFn(input);
-    }
 
-    return [isBrand, {} as Brand];
+declare const __brand: unique symbol;
+
+type Branded<T, Brand> = T & {[__brand]: Brand};
+
+const email: string = 'hi@youtube.com';
+
+type Email = Branded<string, 'Email'>;
+function sendEmail(
+  address: Email,
+  text :string
+)
+
+{
+  console.log(`send email to ${address} with text ${text}`);
 }
 
-const [isEmail, EmailObject] = branded((input: string) => true, 'ValidEmail' as const);
-
-type ValidEmail = typeof EmailObject;
-
-//assert and throw on false:
-function assertValidEmail(input: string): asserts input is ValidEmail {
-    if(!isEmail(input)) {
-        throw new Error('input is no email');
-    }
+function isValidEmail(input: string): input is Email {
+  return input.includes('@');
 }
 
-function sendEmail(input: ValidEmail) {
 
+function assertValidEmail(input: string): asserts input is Email {
+  if(!input.includes('@')) {
+    throw new Error(`${input} is no email`);
+  }
 }
 
-const email = 'mail';
-if(isEmail(email)) {
-    const validEmail: ValidEmail = email;
-    sendEmail(email);
-}
+assertValidEmail(email);
+email
+// ^?
+sendEmail(email, 'our text');
 
-const invalidEmail: ValidEmail = email;
+
+sendEmail('totally not an email', 'asdf');
