@@ -30,3 +30,32 @@ const message: MessageTypesArray = {
 
   imgPath: 'path'
 }
+
+interface User {
+  someValue: unknown;
+}
+
+interface AuthenticatedUser {
+  user: User;
+  isAuthenticated: true;
+  isLoading: false;
+}
+
+interface UnauthenticatedUser {
+  user: null;
+  isAuthenticated: false;
+  isLoading: false;
+}
+interface PendingUser {
+  user: null;
+  isAuthenticated: false;
+  isLoading: true;
+}
+
+type AuthenticatedUserState = OneOf<[AuthenticatedUser, UnauthenticatedUser, PendingUser]>;
+
+const user: AuthenticatedUserState = {
+  user: null,
+  isAuthenticated: false,
+  isLoading: false
+}
