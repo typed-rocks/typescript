@@ -3,10 +3,10 @@
 type Resolved = Awaited<Promise<Promise<Promise<string>>>>;
 //    ^? 
 
-type Tupel<Type, Length extends number, Tupel extends Type[] = []> = Tupel['length'] extends Length ? Tupel : TupelSized<Type, Length, [Type, ...Tupel]>;
+type Tuple<Type, Length extends number, Tuple extends Type[] = []> = Tuple['length'] extends Length ? Tuple : TupleSized<Type, Length, [Type, ...Tuple]>;
 
 
-type T3 = Tupel<number, 4>;
+type T3 = Tuple<number, 4>;
 //   ^?
 
 // MAX depth 1000 
